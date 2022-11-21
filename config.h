@@ -48,6 +48,7 @@ static const Rule rules[] = {
 	{ "Firefox",  NULL,       NULL,       1 << 1,       0,           -1 },
 	{ "discord",  NULL,       NULL,       1 << 2,       0,           -1 },
 	{ "Steam",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Code - OSS",  NULL,       NULL,       1 << 3,       0,           -1 },
  	{ NULL,		  NULL,		"spterm",		SPTAG(0),		1,			 -1 },
  	{ NULL,		  NULL,		"spfm",		SPTAG(1),		1,			 -1 },
  	{ NULL,		  NULL,	"keepassxc",		SPTAG(2),		0,			 -1 },
@@ -89,7 +90,7 @@ static const char *cmdprintscreen[] = { "scrot", "-d3", "/home/peter/Media/Scree
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ 0,	PrintScreenDWM,	spawn,	{.v = cmdprintscreen } },
-	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
+	{ MODKEY,                       XK_r,      spawn,          {.v = roficmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -115,8 +116,8 @@ static const Key keys[] = {
 	{ MODKEY,            			XK_y,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			XK_u,	   togglescratch,  {.ui = 1 } },
 	{ MODKEY,            			XK_x,	   togglescratch,  {.ui = 2 } },
-	{ MODKEY,              XK_e,           shiftview,  { .i = +1 } },
-	{ MODKEY,              XK_w,           shiftview,  { .i = -1 } },
+	{ MODKEY,              XK_o,           shiftview,  { .i = +1 } },
+	{ MODKEY,              XK_p,           shiftview,  { .i = -1 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
