@@ -46,12 +46,12 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
  	/* class         instance  title            tags mask  isfloating  isterminal  noswallow  monitor */
- 	{ "Gimp",        NULL,     NULL,            1 << 6,    0,          0,           0,        -1 },
- 	{ "Firefox",     NULL,     NULL,            1 << 1,    0,          0,          -1,        -1 },
+ 	{ "Gimp",        NULL,     NULL,            1 << 7,    0,          0,           0,        -1 },
+ 	{ "Firefox",     NULL,     NULL,            0,         0,          0,          -1,        -1 },
  	{ "Alacritty",   NULL,     NULL,            0,         0,          1,           0,        -1 },
-	{ "discord",     NULL,     NULL,            1 << 2,    0,          0,           0,        -1 },
+	{ "discord",     NULL,     NULL,            1 << 1,    0,          0,           0,        -1 },
 	{ "Steam",       NULL,     NULL,            1 << 8,    0,          0,           0,        -1 },
-	{ "Code - OSS",  NULL,     NULL,            1 << 3,    0,          0,           0,        -1 },
+	{ "Code - OSS",  NULL,     NULL,            1 << 2,    0,          0,           0,        -1 },
  	{ NULL,          NULL,     "Event Tester",  0,         0,          0,           1,        -1 }, /* xev */
  	{ NULL,		       NULL,		 "spterm",		    SPTAG(0),	 1,			     1,           0,        -1 },
  	{ NULL,		       NULL,		 "spfm",		      SPTAG(1),	 1,			     1,           0,        -1 },
@@ -64,7 +64,6 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static int attachbelow = 1;    /* 1 means attach after the currently active window */
-static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -115,7 +114,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_semicolon,setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,                       XK_c,      killclient,     {0} },
+	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
  	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[4]} },
@@ -126,7 +125,9 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_i,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_s,      togglesticky,   {0} },
+ 	{ MODKEY,                       XK_f,      togglefullscreen, {0} },
+ 	{ MODKEY|ShiftMask,             XK_f,      togglefakefullscreen, {0} },
+	{ MODKEY|ShiftMask,             XK_s,      togglesticky,   {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -134,7 +135,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 //{ MODKEY,                       XK_s,      show,           {0} },
- 	{ MODKEY|ShiftMask,             XK_s,      showall,        {0} },
+ 	{ MODKEY,                       XK_s,      showall,        {0} },
  	{ MODKEY,                       XK_h,      hide,           {0} },
 	{ MODKEY,            			      XK_bracketleft,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			      XK_bracketright,     togglescratch,  {.ui = 1 } },

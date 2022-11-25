@@ -1,14 +1,53 @@
 --- dwm.c
 +++ dwm.c
-@@ -1919,7 +1941,10 @@ updategeom(void)
- 					m->clients = c->next;
- 					detachstack(c);
- 					c->mon = mons;
--					attach(c);
-+					if( attachbelow )
-+						attachBelow(c);
-+					else
-+						attach(c);
- 					attachstack(c);
- 				}
- 				if (m == selmon)
+@@ -93,6 +93,7 @@ struct Client {
+ 	int bw, oldbw;
+ 	unsigned int tags;
+ 	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
++	int fakefullscreen;
+ 	Client *next;
+ 	Client *snext;
+ 	Monitor *mon;
+@@ -212,7 +214,9 @@ static void tag(const Arg *arg);
+ static void tagmon(const Arg *arg);
+ static void tile(Monitor *);
+ static void togglebar(const Arg *arg);
++static void togglefakefullscreen(const Arg *arg);
+ static void togglefloating(const Arg *arg);
++static void togglefullscreen(const Arg *arg);
+ static void toggletag(const Arg *arg);
+ static void toggleview(const Arg *arg);
+ static void unfocus(Client *c, int setfocus);
+@@ -793,8 +800,10 @@ focus(Client *c)
+ {
+ 	if (!c || !ISVISIBLE(c))
+ 		for (c = selmon->stack; c && !ISVISIBLE(c); c = c->snext);
+-	if (selmon->sel && selmon->sel != c)
++	if (selmon->sel && selmon->sel != c) {
++		losefullscreen(c);
+ 		unfocus(selmon->sel, 0);
++	}
+ 	if (c) {
+ 		if (c->mon != selmon)
+ 			selmon = c->mon;
+@@ -842,7 +851,7 @@ focusstack(const Arg *arg)
+ {
+ 	Client *c = NULL, *i;
+ 
+-	if (!selmon->sel || (selmon->sel->isfullscreen && lockfullscreen))
++	if (!selmon->sel || (selmon->sel->isfullscreen && selmon->sel->fakefullscreen != 1))
+ 		return;
+ 	if (arg->i > 0) {
+ 		for (c = selmon->sel->next; c && !ISVISIBLE(c); c = c->next);
+@@ -1086,8 +1105,10 @@ manage(Window w, XWindowAttributes *wa)
+ 		(unsigned char *) &(c->win), 1);
+ 	XMoveResizeWindow(dpy, c->win, c->x + 2 * sw, c->y, c->w, c->h); /* some windows require this */
+ 	setclientstate(c, NormalState);
+-	if (c->mon == selmon)
++	if (c->mon == selmon) {
++		losefullscreen(c);
+ 		unfocus(selmon->sel, 0);
++	}
+ 	c->mon->sel = c;
+ 	arrange(c->mon);
+ 	XMapWindow(dpy, c->win);
