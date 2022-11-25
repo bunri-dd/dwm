@@ -26,9 +26,9 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"alacritty", "-t", "spterm", "-o", "window.dimensions.columns=120", "window.dimensions.lines=34", NULL };
-const char *spcmd2[] = {"alacritty", "-t", "spfm", "-o", "window.dimensions.columns=144", "window.dimensions.lines=41", "-e", "ranger", NULL };
-const char *spcmd3[] = {"keepassxc", NULL };
+const char *spcmd1[] = {"alacritty", "-t", "spterm", "-o", "window.dimensions.columns=120", "window.dimensions.lines=34", NULL }; // terminal scratchpad
+const char *spcmd2[] = {"alacritty", "-t", "spfm", "-o", "window.dimensions.columns=144", "window.dimensions.lines=41", "-e", "ranger", NULL }; // ranger scratchpad
+const char *spcmd3[] = {"keepassxc", NULL }; // keepassxc scratchpad
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
@@ -67,24 +67,24 @@ static int attachbelow = 1;    /* 1 means attach after the currently active wind
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
- 	{ "|||",      col },     /* first entry is default */
-	{ "[]=",      tile },    
+ 	{ "|||",      col },     /* first entry is default, columns layout */
+	{ "[]=",      tile },    // tile layout
 	{ "< >",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 	{ "|M|",      centeredmaster },
 	{ ">M>",      centeredfloatingmaster },
- 	{ "TTT",      bstack },
- 	{ "===",      bstackhoriz },
+ 	{ "TTT",      bstack }, // bottomstack layout
+ 	{ "===",      bstackhoriz }, // horizontal bottom stack layout
 };
 
 /* key definitions */
-#define MODKEY Mod4Mask
+#define MODKEY Mod4Mask // windows key
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
-#define PrintScreenDWM 0x0000ff61
+#define PrintScreenDWM 0x0000ff61 // the printscreen button
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
