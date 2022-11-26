@@ -5,7 +5,7 @@ This is my build of dwm, the extremely fast, small, and dynamic window manager f
 Here's the list of the patches I've applied to this build:
 * fullscreen-compilation
 * attachbelow
-* layout patches: bottomstack, centeredmaster, columns
+* layout patches: bottomstack, centeredmaster, columns, fibonacci
 * sticky
 * swallow
 * pertag
@@ -17,23 +17,17 @@ Here's the list of the patches I've applied to this build:
 * autostart
 * uselessgap
 
-## Requirements
-In order to build dwm you need the Xlib header files.
-
 ## Configuration
 The configuration of dwm is done by creating a custom config.h
 and (re)compiling the source code, or (preferred) adding the removal of config.h into the makefile clean function and editing config.def.h only.
 
 ## Installation
-------------
-Edit config.mk to match your local setup if you need to (dwm is installed into
-the /usr/local namespace by default).
-
-Afterwards enter the following command to build and install dwm (if
-necessary as root):
-
-    make clean install
-
+Enter the following commands to build and install  this build of dwm:
+```bash
+git clone https://github.com/pter1342/dwm.git
+cd dwm
+sudo make clean install
+```
 
 ## Running dwm
 Add the following line to your .xinitrc to start dwm using startx:
