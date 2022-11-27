@@ -145,6 +145,11 @@ static const Key keys[] = {
 	{ MODKEY,            			      XK_x,	     togglescratch,  {.ui = 2 } },
 	{ MODKEY,                       XK_m,      shiftview,      { .i = +1 } },
 	{ MODKEY,                       XK_n,      shiftview,      { .i = -1 } },
+  { MODKEY,			                  XK_F8,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "toggle", NULL } } },
+  { MODKEY,			                  XK_F9,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "prev", NULL } } },
+  { MODKEY,			                  XK_F10,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "volume", "-5", NULL } } },
+  { MODKEY,			                  XK_F11,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "volume", "+5", NULL } } },
+  { MODKEY,			                  XK_F12,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "next", NULL } } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
