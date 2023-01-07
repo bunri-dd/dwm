@@ -47,11 +47,11 @@ static const Rule rules[] = {
 	 */
  	/* class         instance  title            tags mask  isfloating  isterminal  noswallow  monitor */
  	{ "Gimp",        NULL,     NULL,            1 << 7,    0,          0,           0,        -1 },
- 	{ "Firefox",     NULL,     NULL,            0,         0,          0,          -1,        -1 },
+ 	{ "Firefox",     NULL,     NULL,            1 << 1,    0,          0,          -1,        -1 },
  	{ "Alacritty",   NULL,     NULL,            0,         0,          1,           0,        -1 },
-	{ "discord",     NULL,     NULL,            1 << 1,    0,          0,           0,        -1 },
+	{ "discord",     NULL,     NULL,            1 << 3,    0,          0,           0,        -1 },
 	{ "Steam",       NULL,     NULL,            1 << 8,    0,          0,           0,        -1 },
-	{ "Code - OSS",  NULL,     NULL,            1 << 2,    0,          0,           0,        -1 },
+	{ "Code - OSS",  NULL,     NULL,            1 << 6,    0,          0,           0,        -1 },
  	{ NULL,          NULL,     "Event Tester",  0,         0,          0,           1,        -1 }, /* xev */
  	{ NULL,		       NULL,		 "spterm",		    SPTAG(0),	 1,			     1,           0,        -1 },
  	{ NULL,		       NULL,		 "spfm",		      SPTAG(1),	 1,			     1,           0,        -1 },
@@ -99,22 +99,22 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *roficmd[] = { "rofi", "-show", "drun", "-show-icons","-font", rofifont, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
-static const char *cmdprintscreen[] = { "scrot", "-d3", "/home/peter/Media/Screenshots/%Y-%m-%d-%s_$wx$h.jpg", NULL };
+static const char *cmdprintscreen[] = { "flameshot", "gui", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ 0,	PrintScreenDWM,	spawn,	{.v = cmdprintscreen } },
 	{ MODKEY,                       XK_r,      spawn,          {.v = roficmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_r,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstackvis,  {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstackvis,  {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_j,      focusstackhid,  {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      focusstackhid,  {.i = -1 } },
-	{ MODKEY,                       XK_o,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_p,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_semicolon,setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_k,      focusstackvis,  {.i = +1 } },
+	{ MODKEY,                       XK_j,      focusstackvis,  {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_k,      focusstackhid,  {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_j,      focusstackhid,  {.i = -1 } },
+	{ MODKEY,                       XK_n,      incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_m,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_o,      setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_p,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
@@ -143,12 +143,15 @@ static const Key keys[] = {
 	{ MODKEY,            			      XK_bracketleft,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			      XK_bracketright,     togglescratch,  {.ui = 1 } },
 	{ MODKEY,            			      XK_x,	     togglescratch,  {.ui = 2 } },
-	{ MODKEY,                       XK_m,      shiftview,      { .i = +1 } },
-	{ MODKEY,                       XK_n,      shiftview,      { .i = -1 } },
+	{ MODKEY,                       XK_semicolon,      shiftview,      { .i = +1 } },
+	{ MODKEY,                       XK_l,      shiftview,      { .i = -1 } },
+  { MODKEY,			                  XK_F5,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "random", NULL } } },
+  { MODKEY,			                  XK_F6,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "single", NULL } } },
+  { MODKEY,			                  XK_F7,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "repeat", NULL } } },
   { MODKEY,			                  XK_F8,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "toggle", NULL } } },
-  { MODKEY,			                  XK_F9,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "prev", NULL } } },
-  { MODKEY,			                  XK_F10,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "volume", "-5", NULL } } },
-  { MODKEY,			                  XK_F11,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "volume", "+5", NULL } } },
+  { MODKEY,			                  XK_F11,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "prev", NULL } } },
+  { MODKEY,			                  XK_F9,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "volume", "-5", NULL } } },
+  { MODKEY,			                  XK_F10,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "volume", "+5", NULL } } },
   { MODKEY,			                  XK_F12,		 spawn,		       {.v = (const char*[]){ "mpc", "-h", "0.0.0.0", "-p", "50550", "next", NULL } } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
