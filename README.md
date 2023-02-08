@@ -16,6 +16,7 @@ Here's the list of the patches I've applied to this build:
 * scratchpads
 * autostart
 * uselessgap
+* systray
 
 ## Configuration
 The configuration of dwm is done by creating a custom config.h
